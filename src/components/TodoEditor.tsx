@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Button from "./html/Button";
 import Input from "./html/Input";
+import { useTodoStore } from "../store/todoStore";
 
-export default function TodoEditor({ addTodo, }: { addTodo: (title: string) => void; }) {
+export default function TodoEditor() {
+    const addTodo = useTodoStore((state) => state.addTodo);
     const [text, setText] = useState("");
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();     // 기본 동작 막기

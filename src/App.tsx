@@ -1,47 +1,16 @@
 import TodoHeader from "./components/TodoHeader"
 import TodoEditor from "./components/TodoEditor"
 import TodoList from "./components/TodoList"
-import { useCallback, useEffect, useState } from "react"
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>(() =>
-    JSON.parse(localStorage.getItem("todos") || "[]"));
-  const addTodo = (title: string) => {
-    setTodos((todos) => [
-      ...todos,
-      {
-        id: new Date().getTime(),
-        title,
-        done: false,
-      }
-    ]);
-  };
-  const toggleTodo = useCallback((id: number) => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
-    );
-  }, []);
-  const deleteTodo = useCallback((id: number) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
-  }, []);
-  const modifyTodo = useCallback((id: number, title: string) => {
-    setTodos((todos) =>
-      todos.map((todo) => (todo.id === id ? { ...todo, title } : todo))
-    );
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
   return (
     <>
     <div className="todo">
       <TodoHeader />
       {/* 할 일 등록 */}
-      <TodoEditor addTodo={addTodo} />
+      <TodoEditor />
       {/* 할 일 목록 */}
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} modifyTodo={modifyTodo} />
+      <TodoList />
     </div>
     </>
   )
